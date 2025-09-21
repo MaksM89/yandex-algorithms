@@ -1,0 +1,10 @@
+.pytest_cache
+.mypy_cache
+.venv
+__pycache__/
+tmp/
+parsers
+.vscode
+*.egg-info
+tg_bot_script.py
+tmp.txt

@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+  {name = "Maksim Makhanko", email = "makhanko.maksim@yandex.ru"},
+]
+description = "Project for yandex algoritms"
+requires-python = ">= 3.9"
+name = "yandex_algorithms"
+classifiers = [
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+dynamic = ["version"]
+license = "MIT"
+license-files = ["LICENSE"]
+
+[tool.setuptools.dynamic]
+version = { attr = 'yandex_algorithms.__version__' }
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4.1",
+  "pytest-cov>=7.0.0",
+  "pre-commit>=4.3.0"
+]
+
+[project.scripts]
+yalgo = "yandex_algorithms.__main__:run_main"
+
+[project.urls]
+Homepage = "https://github.com/MaksM89/yandex-algorithms"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
