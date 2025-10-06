@@ -30,7 +30,7 @@ jobs:
 
       - name: Lint code
         run: |
-          pre-commit run
+          pre-commit run --all
 
       - name: Run tests
         run: |
