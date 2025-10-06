@@ -1,0 +1,12 @@
+-->
+1 1
+<--
+2
+--> -f A_1_in -n infile
+<--
+2
+--> -n outfile
+1 1
+<-- -f A_1_out
+--> -f A_1_in -n inoutfile
+<-- -f A_1_out
