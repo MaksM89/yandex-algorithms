@@ -14,9 +14,10 @@ _SUBMISSION_INFO_URL = _SUBMISSION_URL + '/{run_id}'
 _PROBLEM_URL = _CONTEST_URL + '/problems'
 _STATEMENT_URL = _PROBLEM_URL + '/{alias}/statement'
 
-_NOT_READY_STR = 'No report'
-
 _logger = logging.getLogger(__name__)
+
+NOT_READY_STR = 'No report'
+OK = 'OK'
 
 
 class ProblemInfo(TypedDict):
@@ -136,7 +137,7 @@ def get_submission_result(contest_id: int, run_id: int, token: str) -> tuple[str
     if status != 200:
         raise Exception(f'Can\'t get result, got: {resp["error"]}')  # type: ignore[index]
     verdict = resp['verdict']  # type: ignore[index]
-    if verdict == _NOT_READY_STR:
+    if verdict == NOT_READY_STR:
         short_verdict = verdict
     else:
         short_verdict = ''.join(filter(str.isupper, verdict))
@@ -147,10 +148,10 @@ def get_submission_result(contest_id: int, run_id: int, token: str) -> tuple[str
 def wait_submission_result(contest_id: int, run_id: int, token: str, seconds: int) -> tuple[str, Union[int, None]]:
     sleep_seconds = max(seconds // 10, 1)  # минимум секунду ждем
     start = time.perf_counter()
-    verdict, testnum = _NOT_READY_STR, None
+    verdict, testnum = NOT_READY_STR, None
     while time.perf_counter() - start <= seconds:
         verdict, testnum = get_submission_result(contest_id, run_id, token)
-        if verdict != _NOT_READY_STR:
+        if verdict != NOT_READY_STR:
             break
         _logger.info('The result is not ready yet. Waiting for %d seconds.', sleep_seconds)
         time.sleep(sleep_seconds)

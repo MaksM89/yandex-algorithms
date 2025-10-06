@@ -63,8 +63,10 @@ def send(solution_name: Union[str, None], run_tests: bool, wait_seconds: int):
             return
     mod = modules.get_module()
     verdict, testnum = mod.send_submission(solution_name, wait_seconds)
-    if verdict.lower() == 'ok':
+    if verdict == mod.OK:
         _logger.info('✅ Good job! 👍')
-    elif testnum is not None:  # ошибка
+    elif verdict == mod.NOT_READY:
+        _logger.info('🤷 Not enough time. Passed %d test', testnum)
+    else:  # ошибка
         _logger.info('❌ Got error at test number %d', testnum)
         copy_to_attempts(solution_name, verdict, testnum)
