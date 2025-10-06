@@ -24,7 +24,8 @@ def generate_main(infilevar: str = '', outfilevar: str = '') -> str:
     return MAIN.format(header=header).lstrip()
 
 
-CONFTEST = dedent("""
+CONFTEST = dedent(
+    """
     from yandex_algorithms.unit import TestSolution, TestCompare
 
     # taskname = 'A'
@@ -41,6 +42,6 @@ CONFTEST = dedent("""
     #     n = 10
     #     for _ in range(n):
     #         a, b = randint(1, 5), randint(-4, 4)
-    #         yield f'{a} {b}\n'
-    """
-                  ).lstrip()
+    #         yield f'{a} {b}\\n'
+
+    """).lstrip()
