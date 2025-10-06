@@ -40,7 +40,7 @@ _Disclamer_: сильному не нужно, а слабому не помож
 5. Пустая строка в конце файла (в любом случае добавится)
 
 ## Установка
-`pip install git@https://github.com/MaksM89/yandex-algorithms.git`
+`pip install git+https://github.com/MaksM89/yandex-algorithms.git`
 ## Инициализация
 `yalgo init --help`
 
