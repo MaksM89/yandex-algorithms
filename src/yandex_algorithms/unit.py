@@ -88,7 +88,7 @@ class TestCompare(TestCase):
         for inp in self.data:
             self.cur_data = inp
             self.exp = None
-            with mock_input_output(self.mod, inp, self.infilevar, self.outfilevar) as mock_out:
+            with mock_input_output(self.error_mod, inp, self.infilevar, self.outfilevar) as mock_out:
                 self.error_mod.main()
                 self.exp = mock_out.text
             out = ''
