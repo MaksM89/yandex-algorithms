@@ -3,7 +3,8 @@ import importlib
 from urllib.parse import urlparse
 
 _known_parsers = {
-    'contest.yandex.ru': 'contestyandex'
+    'contest.yandex.ru': 'contestyandex',
+    'new.contest.yandex.ru': 'contestyandex',
 }
 
 
