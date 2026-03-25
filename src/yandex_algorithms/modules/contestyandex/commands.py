@@ -19,7 +19,7 @@ _logger = logging.getLogger(__name__)
 
 
 def init(url: str, **params):
-    m = re.search(r'/contest/(?P<id_>\d+)', url)
+    m = re.search(r'/contests?/(?P<id_>\d+)', url)
     if m is None:
         raise NotImplementedError(f'Can\'t get contest id from {url}')
     contest_id = int(m.group('id_'))
