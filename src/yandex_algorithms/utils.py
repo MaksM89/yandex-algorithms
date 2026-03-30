@@ -120,18 +120,18 @@ def mock_input_output(module, inp: str, infilevar: str, outfilevar: str) -> Gene
         patch('sys.stdin', i),
     ]
     if hasattr(module, 'stdin'):
-        patches.append(patch(f'{module.__name__}.stdin', i))
-    if hasattr(module, f'{infilevar}'):
+        patches.append(patch.object(module, 'stdin', i))
+    if hasattr(module, infilevar):
         fin = tempfile.NamedTemporaryFile(delete=False)
         fin.write(inp.encode())
         fin.close()
-        patches.append(patch(f'{module.__name__}.{infilevar}', fin.name))
+        patches.append(patch.object(module, infilevar, fin.name))
     else:
         fin = None
-    if hasattr(module, f'{outfilevar}'):
+    if hasattr(module, outfilevar):
         fout = tempfile.NamedTemporaryFile(delete=False)
         fout.close()
-        patches.append(patch(f'{module.__name__}.{outfilevar}', fout.name))
+        patches.append(patch.object(module, outfilevar, fout.name))
     else:
         fout = None
     for p in patches:
@@ -233,17 +233,17 @@ def store_input_output(alias: str, inp: str, out: str, id_: str = ''):
     cfg = load_config()
     id_ = id_ or ''.join(random.choices(string.ascii_letters, k=12))
     infile = Path('inputs') / f'{alias}_{id_}_in'
-    infile.write_text(inp)
     outfile = Path('inputs') / f'{alias}_{id_}_out'
-    outfile.write_text(out)
     prompt_in = cfg['prompt_in']
     prompt_out = cfg['prompt_out']
     if inp.count('\n') > 10:
+        infile.write_text(inp)
         p_in = prompt_in + f' -f {infile.name}\n'
     else:
         p_in = prompt_in + '\n' + inp
     if out.count('\n') > 10:
-        p_out = prompt_out + f' -f {infile.name}\n'
+        outfile.write_text(out)
+        p_out = prompt_out + f' -f {outfile.name}\n'
     else:
         p_out = prompt_out + '\n' + out
     text = p_in + p_out
