@@ -125,13 +125,13 @@ def mock_input_output(module, inp: str, infilevar: str, outfilevar: str) -> Gene
         fin = tempfile.NamedTemporaryFile(delete=False)
         fin.write(inp.encode())
         fin.close()
-        patches.append(patch.object(module, 'infilevar', fin.name))
+        patches.append(patch.object(module, infilevar, fin.name))
     else:
         fin = None
     if hasattr(module, outfilevar):
         fout = tempfile.NamedTemporaryFile(delete=False)
         fout.close()
-        patches.append(patch.object(module, 'outfilevar', fout.name))
+        patches.append(patch.object(module, outfilevar, fout.name))
     else:
         fout = None
     for p in patches:
