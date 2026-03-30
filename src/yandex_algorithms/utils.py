@@ -120,18 +120,18 @@ def mock_input_output(module, inp: str, infilevar: str, outfilevar: str) -> Gene
         patch('sys.stdin', i),
     ]
     if hasattr(module, 'stdin'):
-        patches.append(patch(f'{module.__name__}.stdin', i))
-    if hasattr(module, f'{infilevar}'):
+        patches.append(patch.object(module, 'stdin', i))
+    if hasattr(module, infilevar):
         fin = tempfile.NamedTemporaryFile(delete=False)
         fin.write(inp.encode())
         fin.close()
-        patches.append(patch(f'{module.__name__}.{infilevar}', fin.name))
+        patches.append(patch.object(module, 'infilevar', fin.name))
     else:
         fin = None
-    if hasattr(module, f'{outfilevar}'):
+    if hasattr(module, outfilevar):
         fout = tempfile.NamedTemporaryFile(delete=False)
         fout.close()
-        patches.append(patch(f'{module.__name__}.{outfilevar}', fout.name))
+        patches.append(patch.object(module, 'outfilevar', fout.name))
     else:
         fout = None
     for p in patches:
